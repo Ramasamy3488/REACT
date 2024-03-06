@@ -1,0 +1,81 @@
+import React, { useEffect, useState } from 'react'
+import axios from "axios";
+function App() {
+  const [apidata,setApiData]= useState([])
+  const [country,setCountry] = useState("")
+  const [category,setCategory] = useState("")
+  const apinewsCall = ()=>{
+      axios.get("https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=da083256778d4c069bc37db6aeebff4f")
+      .then((res)=>{
+          setApiData(res.data.articles)
+      }).catch((err)=>{
+          console.log(err);
+      })
+  }
+
+  const getData = ()=>{
+      axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=da083256778d4c069bc37db6aeebff4f`)
+      .then((res)=>{
+        setApiData(res.data.articles)
+    }).catch((err)=>{
+        console.log(err);
+    })
+    }
+  useEffect(()=>{
+    apinewsCall()
+  },[])
+  return (
+    <div>
+        <div className="container">
+          <div className="row align-items-center">
+             <div className="col-md-5">
+                  <h2>Select Country</h2>
+                  <select onChange={e=>setCountry(e.target.value)}>
+                     <option value="in">INDIA</option>
+                     <option value="us">UNITED STATES</option>
+                     <option value="nz">NEWZLAND</option>
+                     <option value="jp">JAPAN</option>
+                     <option value="be">BELGIUM</option>
+                     <option value="ua">UNITED ARABIC</option>                     
+                  </select>
+              </div>
+             <div className="col-md-5">
+                  <h2>Select Category</h2>
+                  <select onChange={e=>setCategory(e.target.value)}>
+                     <option value="business">BUSINESS</option>
+                     <option value="entertainment">ENTERTAINMENT</option>
+                     <option value="general">GENERAL</option>
+                     <option value="health">HEALTH</option>
+                     <option value="science">SCIENCE</option>
+                     <option value="sports">SPORTS</option>
+                     <option value="technology">TECHNOLOGY</option>
+                  </select>
+             </div>
+             <div className="col-md-2">
+                  <button onClick={getData} className='btn btn-danger'>GET DATA</button>
+             </div>
+          </div>
+          <hr/>
+            <div className="row">
+              <h2>Total Record is {apidata.length}</h2>
+                {
+                  apidata.map((res,index)=>{
+                       return(
+                         <div className='col-md-3 mb-5 border-bottom-3' key={index}>
+                              <h4>{res.title}</h4>
+                              <img src={res.urlToImage} alt="" className='img-fluid' />
+                              <p>{res.content}</p>
+                              <p>Published : <b>{res.publishedAt}</b></p>
+                              <p>Source : <b>{res.source.name}</b></p>
+                              <a href={res.url} className='btn btn-primary' target='_blank'>READ MORE</a>
+                         </div>
+                       )
+                  })
+                }
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default App
