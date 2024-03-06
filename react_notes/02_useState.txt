@@ -1,0 +1,51 @@
+import React, { useState } from 'react'
+
+function App() {
+  const [taskList,setTaskList] = useState([]);
+  const [newTask, setNewTask] = useState("");
+  const [message,setMessage] = useState("")
+  const addTask = ()=>{
+       const NewTaskItem = {
+           id: taskList.length === 0 ? 1 : taskList[taskList.length-1].id+1,
+           taskName: newTask
+       }
+       setTaskList([...taskList,NewTaskItem ])
+  }
+  const deleteData = (id)=>{
+      const AfterDeletedItems = taskList.filter((item)=>{
+            return item.id !== id
+      })
+      setTaskList(AfterDeletedItems)
+      setMessage(id + "Deleted")
+  }
+  return (
+    <div>
+      <div className="container">
+      <div className="inputItem">
+               <input type="text"  placeholder='Enter Task Name' onChange={(e)=>setNewTask(e.target.value)}/>
+               <button onClick={addTask}>ADD TASK</button>
+           </div>
+         <div className="listItems">
+            <h3>Total Record is {taskList.length}</h3>
+            <h4>{message}</h4>
+                <ul>
+                   {
+                      taskList.map((task)=>{
+                          return(
+                             <li key={task.id}>
+                                <span>{task.id}</span>
+                                <span>{task.taskName}</span>
+                                <button onClick={()=>deleteData(task.id)}>Delete Item</button>
+                             </li>
+                          )
+                      })
+                   }
+                </ul>
+         </div>
+      </div>
+
+    </div>
+  )
+}
+
+export default App

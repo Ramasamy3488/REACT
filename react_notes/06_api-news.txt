@@ -1,0 +1,189 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+
+function App() {
+  const [apiNews,setapiNews] = useState([]);
+  
+ const getnewsAPI = ()=>{
+    axios.get("https://newsapi.org/v2/top-headlines?country=ca&apiKey=da083256778d4c069bc37db6aeebff4f")
+    .then((res)=>{
+        console.log(res);
+        setapiNews(res.data.articles)
+        console.log(res.data.articles);
+    }).catch((err)=>{
+         console.log(err);
+    })
+ }
+
+ useEffect(()=>{
+  getnewsAPI()
+ },[])
+
+
+  return (
+    <div>
+        <div className="container">
+            <div className="row">
+                 {
+                    apiNews.map((news,index)=>{
+                        return(
+                           <div className='col-md-4' key={index}>
+                                <h4>{news.title}</h4>
+                                <img src={news.urlToImage} className='img-fluid' />
+                                <p>{news.description}</p>
+                                <p>{news.content}</p>
+                                <p>Publish Date: <b>{news.publishedAt}</b></p>
+                                <a href={news.url} className='btn btn-danger' target='_blank'>READ MORE</a>
+                           </div>
+                        )
+                    })
+                 }
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default App
+
+-----------------------------------------------------------------------------
+
+
+
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+
+function App() {
+  const [apiresponse,setApiResponse] = useState([])
+  const [id,setId] = useState();
+  const apiCall = ()=>{
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+    .then((res)=>{
+        setApiResponse(res.data)        
+    })
+  }
+  useEffect(()=>{
+    apiCall()
+  },[])
+
+  const filterAPIData = ()=>{
+      const filterItem = apiresponse.filter((item)=>{
+             return item.id == id
+      })
+      console.log(filterItem);
+      setApiResponse(filterItem)
+  }
+
+  return (
+    <div>
+        
+         <div className="apidata">
+          <select onChange={e=>setId(e.target.value)}>
+              {
+                 apiresponse.map((r)=>{
+                    return(
+                      <option value={r.id}>{r.id}</option>
+                    )
+                 })
+              }
+          </select>
+          <button onClick={filterAPIData}>GET DATA</button>
+             <table>
+                <thead>
+                   <tr>
+                     <th>UserId</th>
+                     <th>Id</th>
+                     <th>Title</th>
+                     <th>Body</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    {
+                       apiresponse.map((data)=>{
+                           return(
+                            <tr key={data.id}>
+                               <td>{data.userId}</td>
+                               <td>{data.id}</td>
+                               <td>{data.title}</td>
+                               <td>{data.body}</td>
+                            </tr>
+                           )
+                       })
+                    }
+                </tbody>
+             </table>
+         </div>
+    </div>
+  )
+}
+
+export default App
+
+
+
+
+
+
+
+----------------
+
+
+
+
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+
+function App() {
+  const [apiresponse,setApiResponse] = useState([])
+  const apiCall = ()=>{
+    axios.get("https://jsonplaceholder.typicode.com/photos")
+    .then((res)=>{
+        setApiResponse(res.data)        
+    })
+  }
+  useEffect(()=>{
+    apiCall()
+  },[])
+
+ 
+
+  return (
+    <div>
+        
+         <div className="apidata">
+ 
+             <table>
+                <thead>
+                   <tr>
+                     <th>albumId</th>
+                     <th>Id</th>
+                     <th>Title</th>
+                     <th>VIEW IMAGE</th>
+                     <th>IMAGE</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    {
+                       apiresponse.map((data)=>{
+                           return(
+                            <tr key={data.id}>
+                               <td>{data.albumId}</td>
+                               <td>{data.id}</td>
+                               <td>{data.title}</td>
+                               <td><a href={data.url}>VIEW LINK</a></td>
+                               <td><img src={data.thumbnailUrl} alt="ddsd" /></td>
+                            </tr>
+                           )
+                       })
+                    }
+                </tbody>
+             </table>
+         </div>
+    </div>
+  )
+}
+
+export default App
+
+
+-----------------

@@ -1,0 +1,117 @@
+Request (client) --->  Response(server) 
+
+Request(Dosa) ---->       Server(API) ---->              Kitchen(Data Base)
+   
+React                     Node js                         Sql, Postgreysql,Mongodb
+Angular                   Java,python,Spring boot
+Nextjs
+Vue js
+
+
+API Methods
+   -- GET
+   -- GET BY ID
+   -- POST
+   -- PUT
+    --- PUT/ id
+   -- DELETE
+   --- DElete/id
+
+
+HTTP Status Code
+
+   200, 201,301,502, 404  
+
+
+
+Installing Axios
+
+npm i axios
+
+
+
+
+
+---------------------------------------
+
+
+
+import React, { useState } from 'react'
+import  axios from "axios"
+
+function App() {
+   const [apidata,setApiData] = useState([])
+   fetch("https://jsonplaceholder.typicode.com/posts")
+   .then((res)=>{
+       return res.json()
+   })
+   .then((res)=>{
+        console.log(res);
+   })
+  return (
+    <div>
+        <h1>Welcome Aimore</h1>
+    </div>
+  )
+}
+
+export default App
+
+
+
+
+-------------------------
+
+
+
+
+
+
+import React, { useEffect, useState } from 'react'
+import  axios from "axios"
+import "./App.css"
+
+function App() {
+   const [apidata,setApiData] = useState([])
+  useEffect(()=>{
+   axios.get("https://jsonplaceholder.typicode.com/posts")
+   .then((res)=>{
+        setApiData(res.data)
+        console.log(res.data);
+   })
+  },[])
+  return (
+    <div>
+         <div className="datas">
+              <table>
+                 <thead>
+                  <th>USER ID</th>
+                  <th>ID</th>
+                  <th>TITLE</th>
+                  <th>BODY</th>
+                 </thead>
+                 <tbody>
+             
+                        {
+                            apidata.map((data)=>{
+                                return(
+                                  <tr key={data.id}>
+                                    <td>{data.userId}</td>
+                                    <td>{data.id}</td>
+                                    <td>{data.title}</td>
+                                    <td>{data.body}</td>
+                                  </tr>
+                                )
+                            })
+                        }
+                   
+                 </tbody>
+              </table>
+         </div>
+    </div>
+  )
+}
+
+export default App
+
+

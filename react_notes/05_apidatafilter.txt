@@ -1,0 +1,64 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+
+function App() {
+  const [apidata,setApidata] = useState([]);
+  const [userId,setUserid] = useState()
+  const getAPI = ()=>{
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+    .then((res)=>{
+        setApidata(res.data)
+    })
+  }
+  useEffect(()=>{
+    getAPI()
+  },[])
+
+  const filterData = ()=>{
+       const filtersApi = apidata.filter((item)=>{
+          return item.userId == userId
+       })
+       console.log(filtersApi);  
+       setApidata(filtersApi)    
+  }
+  return (
+    <div>
+      <select onChange={e=>setUserid(e.target.value)}>
+          {
+             apidata.map((r)=>{
+                return(
+                  <option key={r.id} value={r.userId}> {r.userId} </option>
+                )
+             })
+          }
+      </select>
+      <button onClick={filterData}>CLICK</button>
+        <table>
+           <thead>
+            <tr>
+               <th>User ID</th>
+               <th>ID</th>
+               <th>Title</th>
+               <th>Body</th>
+            </tr>
+           </thead>
+           <tbody>
+              {
+                 apidata.map((r)=>{
+                   return(
+                      <tr key={r.id}>
+                         <td>{r.userId}</td>
+                         <td>{r.id}</td>
+                         <td>{r.title}</td>
+                         <td>{r.body}</td>
+                      </tr>
+                   )
+                 })
+              }
+           </tbody>
+        </table>
+    </div>
+  )
+}
+
+export default App

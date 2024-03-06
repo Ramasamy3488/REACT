@@ -1,0 +1,107 @@
+import axios from 'axios';
+import React from 'react'
+import { useState } from 'react'
+
+function App() {
+  const [apidata,setApidata] = useState([]);
+  axios.get("https://jsonplaceholder.typicode.com/todos")
+  .then((res)=>{
+      setApidata(res.data)
+  })
+  return (
+    <div>
+         <table>
+            <thead>
+                <th>USER ID</th>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>COMPLETED</th>
+            </thead>
+            <tbody>
+                 {
+                    apidata.map((d)=>{
+                        return(
+                            <tr key={d.id}>
+                                <td>{d.userId}</td>
+                                <td>{d.id}</td>
+                                <td>{d.title}</td>
+                                <td>{d.completed}</td>
+                            </tr>
+                        )
+                    })
+                 }
+            </tbody>
+         </table>
+    </div>
+  )
+}
+
+export default App
+
+
+
+---------------------
+
+
+
+
+
+import axios from 'axios';
+import React from 'react'
+import { useState } from 'react'
+
+function App() {
+  const [apidata,setApidata] = useState([]);
+  const [msg,setMesg] = useState("")
+  const getVal = (e)=>{
+      setMesg(e.target.value)
+  }
+  return (
+    <div>
+        <select onChange={getVal}>
+           <option value="1">1</option>
+           <option value="2">2</option>
+           <option value="3">3</option>
+           <option value="4">4</option>
+        </select>
+
+        <h2>You have selected the value of {msg}</h2>
+    </div>
+  )
+}
+
+export default App
+
+
+
+
+----------------------
+
+
+
+import axios from 'axios';
+import React from 'react'
+import { useState } from 'react'
+
+function App() {
+   const [msg,setMsg] = useState("")
+   const getVal = (e)=>{
+       setMsg(e.target.value)
+   }
+  return (
+    <div>
+        <select onChange={getVal}>
+           <option value="Mutton">Mutton</option>
+           <option value="Chicken">Chicken</option>
+           <option value="Veg">Veg</option>
+           <option value="Nonveg">Nonveg</option>
+           
+        </select>
+
+        <h2>You have selected the value of {msg}</h2>
+    </div>
+  )
+}
+
+export default App
+

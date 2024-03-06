@@ -1,0 +1,18 @@
+.my-header ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+a {
+    text-decoration: none;
+}
+ul {
+    list-style: none;
+}
+.my-header {
+    background-color: aqua;
+}
